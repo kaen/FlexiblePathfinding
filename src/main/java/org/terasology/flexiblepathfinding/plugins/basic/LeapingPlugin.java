@@ -31,8 +31,14 @@ public class LeapingPlugin extends WalkingPlugin {
 
     @Override
     public boolean isReachable(Vector3i to, Vector3i from) {
-        // only allowed to move 1 unit in positive y axis
-        if(to.x - from.x != 0 || to.z - from.z != 0 || to.y - from.y != 1) {
+        // no horizontal movement
+        if(to.x - from.x != 0 || to.z - from.z != 0) {
+            return false;
+        }
+
+        // only allowed to move 0 or 1 unit in positive y axis
+        int dy = to.y - from.y;
+        if (dy != 1 && dy != 0) {
             return false;
         }
 
