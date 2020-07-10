@@ -31,14 +31,20 @@ public class LeapingPlugin extends WalkingPlugin {
 
     @Override
     public boolean isReachable(Vector3i to, Vector3i from) {
-        // no horizontal movement
-        if(to.x - from.x != 0 || to.z - from.z != 0) {
+        int dx = to.x - from.x;
+        int dy = to.y - from.y;
+        int dz = to.z - from.z;
+        if (Math.abs(dx) > 1 || Math.abs(dz) > 1) {
             return false;
         }
 
-        // only allowed to move 0 or 1 unit in positive y axis
-        int dy = to.y - from.y;
-        if (dy != 1 && dy != 0) {
+        // you can jump up or fall down, but you can't road-runner off the edge
+        if (dy == 0) {
+            return false;
+        }
+
+        // only go up if we're currently on the ground
+        if (dy >= 0 && !isWalkable(from)) {
             return false;
         }
 
@@ -57,6 +63,6 @@ public class LeapingPlugin extends WalkingPlugin {
             }
         }
 
-        return isWalkable(from);
+        return true;
     }
 }

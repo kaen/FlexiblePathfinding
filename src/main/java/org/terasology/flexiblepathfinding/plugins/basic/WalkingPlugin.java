@@ -35,6 +35,10 @@ public class WalkingPlugin extends StandardPlugin {
             return false;
         }
 
+        if (!isWalkable(to)) {
+            return false;
+        }
+
         // check that all blocks passed through by this movement are penetrable
         for (Vector3i occupiedBlock : getOccupiedRegionRelative()) {
 
@@ -50,7 +54,7 @@ public class WalkingPlugin extends StandardPlugin {
             }
         }
 
-        return isWalkable(to) || isWalkable(from);
+        return true;
     }
 
     public boolean isWalkable(Vector3i a) {

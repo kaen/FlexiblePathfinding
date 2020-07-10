@@ -85,10 +85,11 @@ public class WalkingLeapingJPSTest {
 
     @Test
     public void simpleJumpOver() throws InterruptedException {
-        executeExample(new String[]{
-                "X X|XXX"
+        // you could jump like this as a player but not reliably as an NPC because it bounces off the ceiling
+        executeFailingExample(new String[]{
+                "X X|XXX|   "
         }, new String[]{
-                "? !|123"
+                "? !|123|   "
         });
     }
 
@@ -96,9 +97,9 @@ public class WalkingLeapingJPSTest {
     @Test
     public void simpleSteps() throws InterruptedException {
         executeExample(new String[]{
-                "X  |XX |XXX"
+                "XXX  |XXXX |XXXXX|XXXXX"
         }, new String[]{
-                "?  |12 | 3!"
+                "?12  |  34 |   5!|     "
         });
     }
 
@@ -141,6 +142,15 @@ public class WalkingLeapingJPSTest {
                 "  stuvwxyz!    ",
         });
 
+    }
+
+    @Test
+    public void pillarJump() throws InterruptedException {
+        executeExample(new String[]{
+                "    X X |    X X |XXXXXXXX|XXXXXXXX|XXXXXXXX"
+        }, new String[]{
+                "        |        |?123 5 !|    4 6 |        "
+        });
     }
 
     @Test
