@@ -93,6 +93,16 @@ public class WalkingLeapingJPSTest {
         });
     }
 
+    @Test
+    public void simpleDogLeg() throws InterruptedException {
+        executeExample(new String[]{
+                "XXX|XXX|XXX|XXX",
+                "X  |XXX|XXX|XXX",
+        }, new String[]{
+                "?  |   |   |   ",
+                "   | 1!|   |   ",
+        });
+    }
 
     @Test
     public void simpleSteps() throws InterruptedException {

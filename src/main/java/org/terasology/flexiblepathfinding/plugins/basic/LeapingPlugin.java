@@ -54,10 +54,12 @@ public class LeapingPlugin extends WalkingPlugin {
             // the start/stop for this block in the occupied region
             Vector3i occupiedBlockTo = new Vector3i(to).add(occupiedBlock);
             Vector3i occupiedBlockFrom = new Vector3i(from).add(occupiedBlock);
+            Vector3i blockLandedOn = new Vector3i(to).subY(1);
 
             Region3i movementBounds = Region3i.createBounded(occupiedBlockTo, occupiedBlockFrom);
             for (Vector3i block : movementBounds) {
-                if (!world.getBlock(block).isPenetrable()) {
+                // only the block we're landing on can be solid
+                if (!block.equals(blockLandedOn) && !world.getBlock(block).isPenetrable()) {
                     return false;
                 }
             }
