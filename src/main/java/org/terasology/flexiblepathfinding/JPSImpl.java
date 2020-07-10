@@ -140,11 +140,11 @@ public class JPSImpl implements JPS {
             open.sort(new Comparator<JPSJumpPoint>() {
                 @Override
                 public int compare(JPSJumpPoint o1, JPSJumpPoint o2) {
-                    if (o1.getHeurisitic() > o2.getHeurisitic()) {
+                    if (o1.getHeuristic() > o2.getHeuristic()) {
                         return -1;
                     }
 
-                    if (o1.getHeurisitic() == o2.getHeurisitic()) {
+                    if (o1.getHeuristic() == o2.getHeuristic()) {
                         return 0;
                     }
                     return 1;
@@ -164,8 +164,27 @@ public class JPSImpl implements JPS {
             path.add(0, parent.getPosition());
             parent = parent.getParent();
         }
+
+        optimizeResult();
         logger.debug("Found path: {}", path);
         return true;
+    }
+
+    // tries to smooth the path by removing noisy direction changes
+    private void optimizeResult() {
+        boolean didOptimize = false;
+        do {
+            didOptimize = false;
+            for (int i = 2; i < path.size(); i++) {
+                Vector3i a = path.get(i - 2);
+                Vector3i c = new Vector3i(path.get(i));
+                Vector3i b = new Vector3i(c).sub(a).div(2).add(a);
+                if (a.distanceSquared(b) != 0 && c.distanceSquared(b) != 0 && b.distanceSquared(path.get(i - 1)) != 0 && config.plugin.isReachable(b, a) && config.plugin.isReachable(c, b)) {
+                    path.set(i - 1, b);
+                    didOptimize = true;
+                }
+            }
+        } while (didOptimize);
     }
 
     //  Algorithm 1 Identify Successors
@@ -190,7 +209,8 @@ public class JPSImpl implements JPS {
             JPSJumpPoint jumpedNeighbor = jump(current.getPosition(), neighbor.getKey(), start, goal);
 
             // updates parent if this is optimal path so far
-            current.setSuccessor(neighbor.getKey(), jumpedNeighbor);
+            double cost = config.plugin.getCost(jumpedNeighbor.getPosition(), current.getPosition());
+            current.setSuccessor(neighbor.getKey(), jumpedNeighbor, cost);
 
             if(null != jumpedNeighbor &&
                     jumpedNeighbor.getPosition().distanceSquared(goal.getPosition()) <= config.goalDistance * config.goalDistance
@@ -201,7 +221,7 @@ public class JPSImpl implements JPS {
 
             // not parent means not optimal path, and we don't have to explore
             if (jumpedNeighbor != null) { // && jumpedNeighbor.getParent() == current) {
-                jumpedNeighbor.setHeurisitic(goal.getPosition().distance(jumpedNeighbor.getPosition()));
+                jumpedNeighbor.setDistanceFromGoal(goal.getPosition().distance(jumpedNeighbor.getPosition()));
                 result.add(jumpedNeighbor);
             }
         }

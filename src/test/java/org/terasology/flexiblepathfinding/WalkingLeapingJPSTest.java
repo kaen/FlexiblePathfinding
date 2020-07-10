@@ -97,9 +97,9 @@ public class WalkingLeapingJPSTest {
     @Test
     public void simpleSteps() throws InterruptedException {
         executeExample(new String[]{
-                "XXX  |XXXX |XXXXX|XXXXX"
+                "XXXXXXX  |XXXXXXXX |XXXXXXXXX|XXXXXXXXX"
         }, new String[]{
-                "?12  |  34 |   5!|     "
+                "?123456  |      78 |       9!|         "
         });
     }
 

@@ -65,4 +65,11 @@ public class LeapingPlugin extends WalkingPlugin {
 
         return true;
     }
+
+    @Override
+    public double getCost(Vector3i to, Vector3i from) {
+        // prefer walking over jumping, value is roughly sqrt(2)
+        // setting this any higher will make path finding MUCH slower when a jump is needed
+        return 1.0f * super.getCost(to, from);
+    }
 }

@@ -39,6 +39,15 @@ public abstract class StandardPlugin implements JPSPlugin {
         return new LineOfSight3d(world).inSight(start, stop);
     }
 
+    @Override
+    public double getCost(Vector3i to, Vector3i from) {
+        if (isReachable(to, from)) {
+            return 1;
+        }
+
+        return Double.MAX_VALUE;
+    }
+
     /**
      * Get the region occupied by the subject based on padding when located at position
      * @return

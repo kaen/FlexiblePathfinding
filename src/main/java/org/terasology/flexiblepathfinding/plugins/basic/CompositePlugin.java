@@ -54,4 +54,15 @@ public class CompositePlugin implements JPSPlugin {
         }
         return false;
     }
+
+    @Override
+    public double getCost(Vector3i a, Vector3i b) {
+        for (JPSPlugin plugin : plugins) {
+            double cost = plugin.getCost(a, b);
+            if (cost < Double.MAX_VALUE) {
+                return cost;
+            }
+        }
+        return Double.MAX_VALUE;
+    }
 }

@@ -21,4 +21,5 @@ import org.terasology.math.geom.Vector3i;
 public interface JPSPlugin {
     boolean inSight(Vector3i start, Vector3i goal);
     boolean isReachable(Vector3i to, Vector3i from);
+    double getCost(Vector3i to, Vector3i from);
 }
