@@ -36,11 +36,11 @@ public class WalkingLeapingJPSTest {
                 "XXXXXXXXX|         |         |XXXXXXXXX|         |         |XXXXXXXXX",
         }, new String[]{
                 "?        |         |         |         |         |         |         ",
-                " 1       |         |         |         |         |         |         ",
-                "  2      |         |         |         |         |         |         ",
-                "  3      |         |         |         |         |         |         ",
-                "  4      |  56     |   7     |         |         |         |         ",
-                "         |         |   8     |   9     |         |         |         ",
+                "1        |         |         |         |         |         |         ",
+                "2        |         |         |         |         |         |         ",
+                " 3       |         |         |         |         |         |         ",
+                "  4      |   5     |         |         |         |         |         ",
+                "         |         |   6     |         |         |         |         ",
                 "         |         |         |   !     |         |         |         ",
                 "         |         |         |         |         |         |         ",
         });
@@ -109,7 +109,7 @@ public class WalkingLeapingJPSTest {
         executeExample(new String[]{
                 "XXXXXXX  |XXXXXXXX |XXXXXXXXX|XXXXXXXXX"
         }, new String[]{
-                "?123456  |      78 |       9!|         "
+                "?123456  |       7 |        !|         "
         });
     }
 
@@ -173,6 +173,15 @@ public class WalkingLeapingJPSTest {
                 "    |    ",
                 " ? !|    ",
                 "    |    "
+        });
+    }
+
+    @Test
+    public void jumpOver() throws InterruptedException {
+        executeFailingExample(new String[]{
+                "X X|XXX|XXX|XXX"
+        }, new String[]{
+                "? !|123|   |   "
         });
     }
 

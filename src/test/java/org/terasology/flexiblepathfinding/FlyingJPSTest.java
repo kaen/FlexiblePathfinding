@@ -33,9 +33,9 @@ public class FlyingJPSTest {
                 "XXXXXXXXX|         |         |XXXXXXXXX|         |         |XXXXXXXXX",
         }, new String[]{
                 "?        |         |         |         |         |         |         ",
-                " 1       |         |         |         |         |         |         ",
-                "  2      |         |         |         |         |         |         ",
-                "   3     |         |         |         |         |         |         ",
+                "1        |         |         |         |         |         |         ",
+                " 2       |         |         |         |         |         |         ",
+                "  3      |         |         |         |         |         |         ",
                 "   4     |   5     |   6     |         |         |         |         ",
                 "         |         |   7     |   8     |         |         |         ",
                 "         |         |         |   !     |         |         |         ",
@@ -50,8 +50,8 @@ public class FlyingJPSTest {
                 "XXX|XXX|XXX",
                 "XXX|XXX|XXX",
         }, new String[]{
-                "?  |   |   ",
-                "   | 1 |  !",
+                "?  | 1 |   ",
+                "   |   |  !",
                 "   |   |   ",
         });
     }
@@ -64,8 +64,8 @@ public class FlyingJPSTest {
                 "XXX|XXX|XXX",
                 "XXX|XXX|XXX",
         }, new String[]{
-                "!  | 1 |   ",
-                "   |   |  ?",
+                "!  |   |   ",
+                "   | 1 |  ?",
                 "   |   |   ",
         });
     }

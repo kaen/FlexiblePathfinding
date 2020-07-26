@@ -47,7 +47,7 @@ public class HumanoidSizeJPSTest {
         executeExample(new String[]{
                 "X |XX|XX",
         }, new String[]{
-                "? |1!|  ",
+                "? | !|  ",
         });
     }
 
