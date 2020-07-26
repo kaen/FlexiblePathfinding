@@ -34,7 +34,7 @@ public class LeapingPlugin extends WalkingPlugin {
         int dx = to.x - from.x;
         int dy = to.y - from.y;
         int dz = to.z - from.z;
-        if (Math.abs(dx) > 1 || Math.abs(dz) > 1) {
+        if (Math.abs(dx) > 1 || Math.abs(dz) > 1 || Math.abs(dy) > 1) {
             return false;
         }
 
@@ -48,13 +48,18 @@ public class LeapingPlugin extends WalkingPlugin {
             return false;
         }
 
+        // only go down if we'll land on the ground
+        Vector3i blockLandedOn = new Vector3i(to).subY(1);
+        if (dy < 0 && world.getBlock(blockLandedOn).isPenetrable()) {
+            return false;
+        }
+
         // check that all blocks passed through by this movement are penetrable
         for (Vector3i occupiedBlock : getOccupiedRegionRelative()) {
 
             // the start/stop for this block in the occupied region
             Vector3i occupiedBlockTo = new Vector3i(to).add(occupiedBlock);
             Vector3i occupiedBlockFrom = new Vector3i(from).add(occupiedBlock);
-            Vector3i blockLandedOn = new Vector3i(to).subY(1);
 
             Region3i movementBounds = Region3i.createBounded(occupiedBlockTo, occupiedBlockFrom);
             for (Vector3i block : movementBounds) {
