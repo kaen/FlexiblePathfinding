@@ -18,11 +18,12 @@ package org.terasology.flexiblepathfinding;
 import org.junit.Test;
 import org.terasology.flexiblepathfinding.helpers.JPSTestHelper;
 import org.terasology.flexiblepathfinding.helpers.MapWorldProvider;
+import org.terasology.flexiblepathfinding.plugins.basic.ClimbingPlugin;
 import org.terasology.flexiblepathfinding.plugins.basic.CompositePlugin;
 import org.terasology.flexiblepathfinding.plugins.basic.LeapingPlugin;
 import org.terasology.flexiblepathfinding.plugins.basic.WalkingPlugin;
 
-public class WalkingLeapingJPSTest {
+public class WalkingLeapingClimbingJPSTest {
     @Test
     public void stairs2() throws InterruptedException {
         executeExample(new String[]{
@@ -162,6 +163,15 @@ public class WalkingLeapingJPSTest {
     }
 
     @Test
+    public void simpleClimb() throws InterruptedException {
+        executeExample(new String[]{
+                "XXH|XXH|XXH|XXH|XXX"
+        }, new String[]{
+                "?  | 12|  3|  !|   "
+        });
+    }
+
+    @Test
     public void startInBox() throws InterruptedException {
         executeFailingExample(new String[]{
                 "   X|   X",
@@ -234,7 +244,8 @@ public class WalkingLeapingJPSTest {
         MapWorldProvider worldProvider = new MapWorldProvider(ground);
         CompositePlugin plugin = new CompositePlugin(
                 new WalkingPlugin(worldProvider, 0.4f, 0.4f),
-                new LeapingPlugin(worldProvider, 0.4f, 0.4f)
+                new LeapingPlugin(worldProvider, 0.4f, 0.4f),
+                new ClimbingPlugin(worldProvider, 0.4f, 0.4f)
         );
 
         config.plugin = plugin;
@@ -248,7 +259,8 @@ public class WalkingLeapingJPSTest {
         MapWorldProvider worldProvider = new MapWorldProvider(ground);
         CompositePlugin plugin = new CompositePlugin(
                 new WalkingPlugin(worldProvider, 0.4f, 0.4f),
-                new LeapingPlugin(worldProvider, 0.4f, 0.4f)
+                new LeapingPlugin(worldProvider, 0.4f, 0.4f),
+                new ClimbingPlugin(worldProvider, 0.4f, 0.4f)
         );
 
         config.plugin = plugin;

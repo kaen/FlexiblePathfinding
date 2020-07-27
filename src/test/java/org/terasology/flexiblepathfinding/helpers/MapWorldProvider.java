@@ -39,12 +39,14 @@ public class MapWorldProvider implements WorldProvider {
     private static final char GROUND = ' ';
     private static final char AIR = 'X';
     private static final char WATER = '~';
+    private static final char LADDER = 'H';
     private static final char NEW_LEVEL = '|';
     private static Logger logger = LoggerFactory.getLogger(MapWorldProvider.class);
     private Map<Vector3i, Block> blocks = Maps.newHashMap();
     private Block airBlock = new Block();
     private Block groundBlock = new Block();
     private Block waterBlock = new Block();
+    private Block ladderBlock = new Block();
 
     public MapWorldProvider(String[] map) {
         airBlock.setPenetrable(true);
@@ -53,11 +55,15 @@ public class MapWorldProvider implements WorldProvider {
         groundBlock.setPenetrable(false);
         groundBlock.setUri(new BlockUri("CoreAssets:Dirt"));
 
-
         waterBlock.setPenetrable(true);
         waterBlock.setUri(new BlockUri("CoreAssets:Water"));
         waterBlock.setLiquid(true);
         waterBlock.setWater(true);
+
+        ladderBlock.setPenetrable(false);
+        ladderBlock.setClimbable(true);
+        ladderBlock.setDoubleSided(true);
+        ladderBlock.setUri(new BlockUri("CoreAssets:Ladder"));
 
         parseMap(map);
     }
@@ -138,6 +144,9 @@ public class MapWorldProvider implements WorldProvider {
                         break;
                     case WATER:
                         blocks.put(vec, waterBlock);
+                        break;
+                    case LADDER:
+                        blocks.put(vec, ladderBlock);
                         break;
                     case NEW_LEVEL:
                         pos.x = 0;
