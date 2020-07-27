@@ -31,7 +31,7 @@ public class LargeSizeJPSTest {
                 "XXX      |XXXXX    |XXXXXXX  |XXXXXXXXX",
         }, new String[]{
                 "         |         |         |         ",
-                "         | ?       | 1!      |         ",
+                "         | ?       |  !      |         ",
                 "         |         |         |         ",
         });
     }

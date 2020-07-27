@@ -209,8 +209,7 @@ public class JPSImpl implements JPS {
             JPSJumpPoint jumpedNeighbor = jump(current.getPosition(), neighbor.getKey(), start, goal);
 
             // updates parent if this is optimal path so far
-            double cost = config.plugin.getCost(jumpedNeighbor.getPosition(), current.getPosition());
-            current.setSuccessor(neighbor.getKey(), jumpedNeighbor, cost);
+            current.setSuccessor(neighbor.getKey(), jumpedNeighbor);
 
             if(null != jumpedNeighbor &&
                     jumpedNeighbor.getPosition().distanceSquared(goal.getPosition()) <= config.goalDistance * config.goalDistance

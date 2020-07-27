@@ -49,13 +49,15 @@ public class LeapingPlugin extends WalkingPlugin {
         }
 
         // only go down if we'll land on the ground
-        Vector3i blockLandedOn = new Vector3i(to).subY(1);
-        if (dy < 0 && world.getBlock(blockLandedOn).isPenetrable()) {
+        if (dy < 0 && !isWalkable(to)) {
             return false;
         }
 
+        Region3i occupiedRegionRelative = getOccupiedRegionRelative();
+        Region3i supportingRegionRelative = getSupportingRegionRelative();
+
         // check that all blocks passed through by this movement are penetrable
-        for (Vector3i occupiedBlock : getOccupiedRegionRelative()) {
+        for (Vector3i occupiedBlock : occupiedRegionRelative) {
 
             // the start/stop for this block in the occupied region
             Vector3i occupiedBlockTo = new Vector3i(to).add(occupiedBlock);
@@ -63,9 +65,15 @@ public class LeapingPlugin extends WalkingPlugin {
 
             Region3i movementBounds = Region3i.createBounded(occupiedBlockTo, occupiedBlockFrom);
             for (Vector3i block : movementBounds) {
-                // only the block we're landing on can be solid
-                if (!block.equals(blockLandedOn) && !world.getBlock(block).isPenetrable()) {
-                    return false;
+                // only the blocks we're landing on or jumping from can be solid, and only if we don't land in them
+                if (!world.getBlock(block).isPenetrable()) {
+                    boolean blockSupportsEnd = supportingRegionRelative.encompasses(new Vector3i(block).sub(to));
+                    boolean blockSupportsStart = supportingRegionRelative.encompasses(new Vector3i(block).sub(from));
+                    boolean blockIsOccupiedAtEnd = occupiedRegionRelative.encompasses(new Vector3i(block).sub(to));
+
+                    if (!((blockSupportsStart || blockSupportsEnd) && !blockIsOccupiedAtEnd)) {
+                        return false;
+                    }
                 }
             }
         }

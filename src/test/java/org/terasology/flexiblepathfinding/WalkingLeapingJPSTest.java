@@ -82,17 +82,6 @@ public class WalkingLeapingJPSTest {
         });
     }
 
-
-    @Test
-    public void simpleJumpOver() throws InterruptedException {
-        // you could jump like this as a player but not reliably as an NPC because it bounces off the ceiling
-        executeFailingExample(new String[]{
-                "X X|XXX|   "
-        }, new String[]{
-                "? !|123|   "
-        });
-    }
-
     @Test
     public void simpleDogLeg() throws InterruptedException {
         executeExample(new String[]{
@@ -164,6 +153,15 @@ public class WalkingLeapingJPSTest {
     }
 
     @Test
+    public void jumpOver() throws InterruptedException {
+        executeExample(new String[]{
+                "X X|XXX|XXX|XXX"
+        }, new String[]{
+                "? !| 1 |   |   "
+        });
+    }
+
+    @Test
     public void startInBox() throws InterruptedException {
         executeFailingExample(new String[]{
                 "   X|   X",
@@ -173,15 +171,6 @@ public class WalkingLeapingJPSTest {
                 "    |    ",
                 " ? !|    ",
                 "    |    "
-        });
-    }
-
-    @Test
-    public void jumpOver() throws InterruptedException {
-        executeFailingExample(new String[]{
-                "X X|XXX|XXX|XXX"
-        }, new String[]{
-                "? !|123|   |   "
         });
     }
 

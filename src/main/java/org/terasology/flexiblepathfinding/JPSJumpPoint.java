@@ -32,7 +32,6 @@ public class JPSJumpPoint {
     // direction of travel from the parent to this point
     private JPSDirection parentDirection;
     private double cost = 0;
-    private double costFromParent = 0;
     private double distanceFromGoal = 0;
     private Vector3i position;
     private JPSJumpPoint successors[] = new JPSJumpPoint[JPSDirection.values().length];
@@ -54,7 +53,7 @@ public class JPSJumpPoint {
     }
 
     public double getHeuristic() {
-        return costFromParent * distanceFromGoal;
+        return distanceFromGoal;
     }
 
     public void setDistanceFromGoal(double distance) {
@@ -70,12 +69,11 @@ public class JPSJumpPoint {
         this.position = position;
     }
 
-    public void setSuccessor(JPSDirection dir, JPSJumpPoint successor, double moveCost) {
+    public void setSuccessor(JPSDirection dir, JPSJumpPoint successor) {
         successors[dir.ordinal()] = successor;
         if(successor != null) {
             double dist = successor.getPosition().distance(getPosition());
             if(successor.getParent() == null || successor.getCost() > getCost() + dist) {
-                successor.costFromParent = moveCost;
                 successor.setCost(getCost() + dist);
                 successor.setParent(this);
                 successor.setParentDirection(dir);
