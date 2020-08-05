@@ -172,6 +172,15 @@ public class WalkingLeapingClimbingJPSTest {
     }
 
     @Test
+    public void simpleClimbUpThenDown() throws InterruptedException {
+        executeExample(new String[]{
+                "XXH  HX|XXH  HX|XXXXXXX"
+        }, new String[]{
+                "?12   !|  3  8 |  4567 "
+        });
+    }
+
+    @Test
     public void startInBox() throws InterruptedException {
         executeFailingExample(new String[]{
                 "   X|   X",

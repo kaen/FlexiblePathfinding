@@ -48,7 +48,7 @@ public class WalkingPlugin extends StandardPlugin {
 
             Region3i movementBounds = Region3i.createBounded(occupiedBlockTo, occupiedBlockFrom);
             for (Vector3i block : movementBounds) {
-                if (!world.getBlock(block).isPenetrable()) {
+                if (!world.getBlock(block).isPenetrable() && !world.getBlock(block).isClimbable()) {
                     return false;
                 }
             }

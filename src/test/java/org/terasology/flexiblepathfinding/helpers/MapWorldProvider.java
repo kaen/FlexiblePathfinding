@@ -125,7 +125,7 @@ public class MapWorldProvider implements WorldProvider {
                     break;
                 }
                 expected.put(i, vec);
-                testData.expectedSize = i + 1;
+                testData.expectedSize = Math.max(testData.expectedSize, i + 1);
                 break;
         }
     }
